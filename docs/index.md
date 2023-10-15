@@ -3,9 +3,9 @@
 layout: home
 
 hero:
-  name: "Ginlon's blog"
-  text: "growth is the only thing that matters"
-  tagline: a toddler of coding
+  name: "I am Ginlon"
+  text: 'Welcome to my blog'
+  tagline: "i am a coder and a trainee of architecture"
   image: 
     src: /avatar.jpg
     alt: Ginlon's avatar
@@ -18,11 +18,11 @@ hero:
       link: /api-examples
 
 features:
-  - title: now i am a developer 
+  - title: now, i am a developer 
     icon: 💻
-    details: but i am not only a developer
+    details: i would like to make coding an art
   - title: mail
     icon: 📬
-    details: ginlon@gmail.com
+    details: ginlon5241@gmail.com
 ---
 
