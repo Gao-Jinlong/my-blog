@@ -4,9 +4,9 @@ layout: home
 
 hero:
   name: "I am Ginlon"
-  text: 'Welcome to my blog'
-  tagline: "i am a coder and a trainee of architecture"
-  image: 
+  text: "nice to meet you"
+  tagline: "Welcome to my blog"
+  image:
     src: /avatar.jpg
     alt: Ginlon's avatar
   actions:
@@ -18,11 +18,18 @@ hero:
       link: /api-examples
 
 features:
-  - title: now, i am a developer 
-    icon: 💻
-    details: i would like to make coding an art
   - title: mail
     icon: 📬
     details: ginlon5241@gmail.com
----
+    link: mailto:ginlon5241@gmail.com
 
+  - title: github
+    icon: 📦
+    details: https://github.com/Gao-Jinlong
+    link: https://github.com/Gao-Jinlong
+
+  - title: 稀土掘金
+    icon: 📖
+    details: https://juejin.cn/user/2775585439885320
+    link: https://juejin.cn/user/2775585439885320
+---
