@@ -1,3 +1,4 @@
+
 # 【项目实践】我的响应式是如何丢掉的
 <a name="GTgfa"></a>
 ## ref 还是 reactive ？
@@ -237,4 +238,5 @@ const idToData = list.reduce((map, item)=>{
 
 - 《Vue.js设计与实现》.霍春阳.2022 [图灵社区](https://www.ituring.com.cn/book/2953)
 - [你不知道的 async、await 魔鬼细节](https://mp.weixin.qq.com/s/X1-DRaZ_9cAfl-q9UwhJGA)
+
 

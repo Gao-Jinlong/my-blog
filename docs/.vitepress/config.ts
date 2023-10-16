@@ -6,6 +6,7 @@ getBlogCategory();
 export default () => {
   return defineConfig({
     title: "Ginlon's blog",
+    lastUpdated: true,
     themeConfig: {
       // https://vitepress.dev/reference/default-theme-config
       logo: "/avatar.jpg",

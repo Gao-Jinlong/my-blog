@@ -1,0 +1,120 @@
+# 使用阿里云搭建个人服务器
+
+## 购买服务器
+1. 购买 ECS 服务
+2. 重设服务器密码
+## 连接服务器
+```bash
+# 进入 root 模式
+sudo -i 
+# 输入密码
+
+# 连接服务器
+ssh root@ip # root 是用户名，ip 是服务器公网 ip 或者域名
+# 输入设置的密码
+```
+先更新 Ubuntu 防止安装找不到问题
+```bash
+apt-get update
+```
+### 安装 nvm
+```bash
+curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.5/install.sh | bash
+```
+`-o` 将下载内容输出到指定位置，`-` 表示输出到标准输出
+`|` 管道操作符，将 `curl` 命令的输出传递给下一个命令
+`bash` 命令行解释器，这里被用于执行安装脚本
+### 安装 node
+```bash
+nvm install 18
+```
+### 安装 docker
+[Install Docker Engine on Ubuntu](https://docs.docker.com/engine/install/ubuntu/#install-using-the-repository)
+### 配置防火墙
+```bash
+ufw allow 'Nginx HTTP'
+
+# ufw 用户友好的防火墙管理工具
+```
+### 安装 Nginx
+
+```bash
+apt-get install nginx
+```
+配置虚拟主机
+
+```bash
+# 创建网站目录
+mkdir /var/www/example.com
+
+# 在 /etc/nginx/sites-available/ 目录中创建一个新的虚拟主机配置
+vim /etc/nginx/site-available/example.com.conf
+```
+
+```nginx
+# 添加配置
+server {
+    listen 80; # 监听 IPv4 80 端口
+    listen [::]:80; # 监听 IPv6 的 80 端口
+    root /var/www/example.com; # 网站根目录
+    index index.html index.htm; # 默认索引文件
+    server_name example.com www.example.com; # 匹配域名
+    # server_name _; # 默认虚拟主机，匹配所有请求
+    location / {
+        try_files $uri $uri/ =404; # 配置 URL路径处理
+    }
+}
+```
+
+启用 nginx 配置  
+
+nginx 通常将配置文件存储在 `/etc/nginx/sites-available/` 目录中
+将配置文件的符号链接添加到 `/etc/nginx/sites-enabled/` 中即可启用配置  
+
+```bash
+ln -s /etc/nginx/sites-available/example.com.conf /etc/nginx/sites-enabled/
+# 默认建立硬链接
+# -s 对源文件简历符号链接，而非硬链接
+```
+
+启动 nginx 
+
+```bash
+systemctl start nginx
+
+# 重新加载配置
+system reload nginx
+# 重启 nginx
+systemctl restart nginx
+# 查看 nginx 状态
+systemctl status nginx
+# 停止 nginx 服务
+systemctl stop nginx
+
+# systemctl 用于管理系统服务的命令行工具
+# 启动自启动
+systemctl enable <service_name>
+# 禁用自启动
+systemctl disable <service_name>
+# 列出所有服务
+systemctl list-units --type=service
+# 查看日志
+journalctl -u <service_name>
+```
+### 上传文件
+使用 SCP 进行上传（路径反过来就是下载）：
+
+- 打开终端，使用以下 scp 命令来将文件上传到服务器。假设您的程序文件位于本地的 /path/to/local/file，服务器上的目标目录是 /path/to/remote/directory，并且您有 SSH 访问权限。
+```
+scp -r -C /path/to/local/file/* username@server_ip:/var/www/example.com.conf
+
+# -r 以递归方式复制
+# -C 使用压缩
+# -i identity_file 从指定文件中读取传输时使用的密钥文件（pem）
+```
+
+   - /path/to/local/file 是本地文件的路径。
+   - username 是您在服务器上的用户名。
+   - server_ip 是服务器的 IP 地址。
+   - /path/to/remote/directory 是服务器上的目标目录。
+- 输入服务器上的用户密码（如果需要），然后文件将被上传到服务器的指定目录。
