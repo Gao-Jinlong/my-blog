@@ -12,10 +12,10 @@ hero:
   actions:
     - theme: brand
       text: Blog Catalogue
-      link: /blog
+      link: /blog/index
     - theme: alt
       text: About me
-      link: /api-examples
+      link: /author
 
 features:
   - title: mail

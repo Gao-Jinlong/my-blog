@@ -1,22 +1,38 @@
 import { defineConfig } from "vitepress";
-import { nav } from "./utils/nav";
-import { getBlogCategory } from "./utils/getBlogCategory";
 // https://vitepress.dev/reference/site-config
-getBlogCategory();
 export default () => {
+  const PRACTICE_ROOT = "/blog/practice/";
   return defineConfig({
-    title: "Ginlon's blog",
+    title: "blog",
     lastUpdated: true,
     themeConfig: {
       // https://vitepress.dev/reference/default-theme-config
       logo: "/avatar.jpg",
-      nav: nav,
-      sidebar: [
-        {
-          text: "施工中...",
-          items: [],
-        },
+      nav: [
+        { text: "Home", link: "/" },
+        { text: "Blog", link: "/blog/" },
+        { text: "Author", link: "/author/" },
       ],
+      search: {
+        provider: "local",
+      },
+      sidebar: {
+        "/blog/": [
+          {
+            text: "实践",
+            items: [
+              {
+                text: "搭建阿里云服务器",
+                link: `${PRACTICE_ROOT}搭建阿里云服务器.md`,
+              },
+              {
+                text: "我的响应式是如何丢掉的",
+                link: `${PRACTICE_ROOT}我的响应式是如何丢掉的.md`,
+              },
+            ],
+          },
+        ],
+      },
 
       socialLinks: [{ icon: "github", link: "https://github.com/Gao-Jinlong" }],
     },
