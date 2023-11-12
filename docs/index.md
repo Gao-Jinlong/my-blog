@@ -7,7 +7,7 @@ hero:
   text: "nice to meet you"
   tagline: "Welcome to my blog"
   image:
-    src: /avatar.jpg
+    src: https://avatars.githubusercontent.com/u/41514616?v=4
     alt: Ginlon's avatar
   actions:
     - theme: brand

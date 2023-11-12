@@ -11,9 +11,17 @@
 
 ## TODO
 
+### 实践
+- [ ] 开放图谱协议（The Open Graph protocol） <Badge text="pending" type="info"/>
+- [ ] 服务端渲染 <Badge text="pending" type="info"/>
+- [ ] 多媒体流 <Badge text="pending" type="info"/>
+- [ ] http 缓存 <Badge text="pending" type="info"/>
+- [ ] buffer <Badge text="pending" type="info"/>
+- [ ] sass 主题切换 <Badge text="pending" type="info"/>
 ### 读书笔记
 - [ ] 图解 HTTP <Badge text="delay" type="danger"/>
-- [ ] 《clean code 代码整洁之道》 <Badge text="doing" type="tip"/>
+- [ ] 《clean code 代码整洁之道》 <Badge text="delay" type="danger"/>
+- [ ] 《clean architecture 架构整洁之道》 <Badge text="doing" type="tip"/>
 ### 文档
-- [ ] clean code 代码实践 <Badge text="doing" type="tip"/>
+- [ ] clean code 整洁代码实践 <Badge text="doing" type="tip"/>
 - [ ] 代码规范 <Badge text="pending" type="info"/>
