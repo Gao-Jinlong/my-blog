@@ -29,6 +29,10 @@ export default () => {
                 text: "我的响应式是如何丢掉的",
                 link: `${PRACTICE_ROOT}我的响应式是如何丢掉的.md`,
               },
+              {
+                text: "前端项目搭建",
+                link: `${PRACTICE_ROOT}前端项目搭建.md`,
+              },
             ],
           },
         ],
