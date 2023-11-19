@@ -4,15 +4,15 @@ export default () => {
   const PRACTICE_BASE_PATH = "/blog/practice/";
   const NOTES_BASE_PATH = "/blog/notes/";
   return defineConfig({
-    title: "blog",
+    title: "ginlon",
     lastUpdated: true,
     themeConfig: {
       // https://vitepress.dev/reference/default-theme-config
       logo: "/avatar.jpg",
       nav: [
-        { text: "Home", link: "/" },
-        { text: "Blog", link: "/blog/" },
-        { text: "Author", link: "/author/" },
+        { text: "首页", link: "/" },
+        { text: "文章", link: "/blog/" },
+        { text: "关于", link: "/author/" },
       ],
       search: {
         provider: "local",
@@ -37,7 +37,7 @@ export default () => {
             ],
           },
           {
-            text: "CSS",
+            text: "笔记",
             items: [
               {
                 text: "CSS 基础知识",
