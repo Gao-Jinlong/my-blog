@@ -1,7 +1,8 @@
 import { defineConfig } from "vitepress";
 // https://vitepress.dev/reference/site-config
 export default () => {
-  const PRACTICE_ROOT = "/blog/practice/";
+  const PRACTICE_BASE_PATH = "/blog/practice/";
+  const NOTES_BASE_PATH = "/blog/notes/";
   return defineConfig({
     title: "blog",
     lastUpdated: true,
@@ -23,15 +24,24 @@ export default () => {
             items: [
               {
                 text: "搭建阿里云服务器",
-                link: `${PRACTICE_ROOT}搭建阿里云服务器.md`,
+                link: `${PRACTICE_BASE_PATH}搭建阿里云服务器.md`,
               },
               {
                 text: "我的响应式是如何丢掉的",
-                link: `${PRACTICE_ROOT}我的响应式是如何丢掉的.md`,
+                link: `${PRACTICE_BASE_PATH}我的响应式是如何丢掉的.md`,
               },
               {
                 text: "前端项目搭建",
-                link: `${PRACTICE_ROOT}前端项目搭建.md`,
+                link: `${PRACTICE_BASE_PATH}前端项目搭建.md`,
+              },
+            ],
+          },
+          {
+            text: "CSS",
+            items: [
+              {
+                text: "CSS 基础知识",
+                link: `${NOTES_BASE_PATH}CSS 基础知识.md`,
               },
             ],
           },
