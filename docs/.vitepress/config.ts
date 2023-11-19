@@ -41,7 +41,7 @@ export default () => {
             items: [
               {
                 text: "CSS 基础知识",
-                link: `${NOTES_BASE_PATH}CSS 基础知识.md`,
+                link: `${NOTES_BASE_PATH}CSS基础知识.md`,
               },
             ],
           },
