@@ -4,7 +4,7 @@ export default () => {
   const PRACTICE_BASE_PATH = "/blog/practice/";
   const NOTES_BASE_PATH = "/blog/notes/";
   return defineConfig({
-    title: "ginlon",
+    title: "ginlon的定义域",
     lastUpdated: true,
     themeConfig: {
       // https://vitepress.dev/reference/default-theme-config

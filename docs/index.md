@@ -5,7 +5,7 @@ layout: home
 hero:
   name: "你好"
   text: "我是 Ginlon"
-  tagline: "一个普通的工程师"
+  tagline: "平平无奇的程序员"
   image:
     src: https://avatars.githubusercontent.com/u/41514616?v=4
     alt: Ginlon's avatar
