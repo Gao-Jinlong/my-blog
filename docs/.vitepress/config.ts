@@ -43,6 +43,10 @@ export default () => {
                 text: "CSS 基础知识",
                 link: `${NOTES_BASE_PATH}CSS基础知识.md`,
               },
+              {
+                text: "页面性能优化",
+                link: `${NOTES_BASE_PATH}页面性能优化.md`,
+              },
             ],
           },
         ],
