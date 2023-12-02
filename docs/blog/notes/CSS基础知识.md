@@ -17,7 +17,7 @@ CSS 层叠样式表（Cascading Style Sheets）
 继承需要在上下文中理解，一些设置在父级元素上的 CSS 是可以被子元素继承的，有些则不能比如 `width`、`padding`、`margin`、`border`
 
 更多的信息可以在查看属性的形式定义，比如 `color` 的形式定义如下：
-![Alt text](image.png)
+![Alt text](image.jpg)
 
 ## 理解继承
 
@@ -117,7 +117,7 @@ CSS 声明的优先级取决于定义它的样式表和级联层
 
 [级联层顺序 demo](https://developer.mozilla.org/zh-CN/docs/Learn/CSS/Building_blocks/Cascade_and_inheritance#%E7%BA%A7%E8%81%94%E5%B1%82%E7%9A%84%E9%A1%BA%E5%BA%8F)
 
-![Alt text](image-1.png)
+![Alt text](image-1.jpg)
 
 ```CSS
 @layer  secondLayer,firstLayer;
