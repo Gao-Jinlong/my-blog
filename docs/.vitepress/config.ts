@@ -12,6 +12,7 @@ export default () => {
       nav: [
         { text: "首页", link: "/" },
         { text: "文章", link: "/blog/" },
+        { text: "日志", link: "/journal/" },
         { text: "关于", link: "/author/" },
       ],
       search: {
@@ -50,6 +51,7 @@ export default () => {
             ],
           },
         ],
+        "/journal": [],
       },
 
       socialLinks: [{ icon: "github", link: "https://github.com/Gao-Jinlong" }],

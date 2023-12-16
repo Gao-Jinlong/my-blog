@@ -18,6 +18,7 @@
 - [ ] http 缓存 <Badge text="pending" type="info"/>
 - [ ] buffer <Badge text="pending" type="info"/>
 - [ ] sass 主题切换 <Badge text="pending" type="info"/>
+- [ ] 跨站登录状态 <Badge text="pending" type="info"/>
 ### 读书笔记
 - [ ] 图解 HTTP <Badge text="delay" type="danger"/>
 - [ ] 《clean code 代码整洁之道》 <Badge text="delay" type="danger"/>
