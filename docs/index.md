@@ -3,33 +3,33 @@
 layout: home
 
 hero:
-  name: "I am Ginlon"
-  text: "nice to meet you"
-  tagline: "Welcome to my blog"
+  name: "你好"
+  text: "我是 Ginlon"
+  tagline: "平平无奇程序员"
   image:
-    src: /avatar.jpg
+    src: https://avatars.githubusercontent.com/u/41514616?v=4
     alt: Ginlon's avatar
   actions:
     - theme: brand
-      text: Blog Catalogue
-      link: /blog
+      text: 博客文档
+      link: /blog/index
     - theme: alt
-      text: About me
-      link: /api-examples
+      text: 关于
+      link: /author/index
 
 features:
-  - title: mail
-    icon: 📬
-    details: ginlon5241@gmail.com
-    link: mailto:ginlon5241@gmail.com
-
   - title: github
-    icon: 📦
+    icon: 🐙
     details: https://github.com/Gao-Jinlong
     link: https://github.com/Gao-Jinlong
 
-  - title: 稀土掘金
-    icon: 📖
+  - title: 掘金
+    icon: 🏆
     details: https://juejin.cn/user/2775585439885320
     link: https://juejin.cn/user/2775585439885320
+
+  - title: 邮箱
+    icon: 📧
+    details: ginlon5241@gmail.com
+    link: mailto:ginlon5241@gmail.com
 ---
