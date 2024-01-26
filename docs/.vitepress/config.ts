@@ -1,9 +1,26 @@
 import { defineConfig } from "vitepress";
+import AutoImport from "unplugin-auto-import/vite";
+import Components from "unplugin-vue-components/vite";
+import { ElementPlusResolver } from "unplugin-vue-components/resolvers";
+
 // https://vitepress.dev/reference/site-config
 export default () => {
   const PRACTICE_BASE_PATH = "/blog/practice/";
   const NOTES_BASE_PATH = "/blog/notes/";
   return defineConfig({
+    vite: {
+      plugins: [
+        AutoImport({
+          resolvers: [ElementPlusResolver()],
+          imports: ["vue"],
+          dts: true,
+        }),
+        Components({
+          resolvers: [ElementPlusResolver()],
+          dts: true,
+        }),
+      ],
+    },
     title: "ginlon的定义域",
     lastUpdated: true,
     themeConfig: {
