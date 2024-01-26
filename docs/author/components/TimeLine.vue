@@ -13,6 +13,8 @@
   </el-timeline>
 </template>
 <script setup lang="ts">
+import { ElTimeline, ElTimelineItem, ElCard } from "element-plus";
+
 type TimeLineItem = {
   startTime: string;
   endTime: string;
