@@ -1,9 +1,15 @@
 <template>
-  <div class="copyright">
+  <div class="copyright" v-if="isHome">
     <a href="http://beian.miit.gov.cn/">备案号：鲁ICP备2024058644号</a>
   </div>
 </template>
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import { computed } from "vue";
+import { useData } from "vitepress";
+const { page, frontmatter } = useData();
+
+const isHome = computed(() => frontmatter.value.layout === "home");
+</script>
 <style scoped lang="scss">
 .copyright {
   text-align: center;
