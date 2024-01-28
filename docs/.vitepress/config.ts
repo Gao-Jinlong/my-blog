@@ -11,13 +11,7 @@ export default () => {
   return defineConfig({
     vite: {
       plugins: [
-        Components({
-          resolvers: [ElementPlusResolver()],
-          dts: true,
-        }),
-        ElementPlus({}),
         AutoImport({
-          resolvers: [ElementPlusResolver()],
           imports: ["vue"],
           dts: true,
         }),
