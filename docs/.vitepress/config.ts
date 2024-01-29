@@ -61,6 +61,10 @@ export default () => {
                 text: "页面性能优化",
                 link: `${NOTES_BASE_PATH}页面性能优化.md`,
               },
+              {
+                text: "VideoDecoder",
+                link: `${NOTES_BASE_PATH}VideoDecoder.md`,
+              },
             ],
           },
         ],
