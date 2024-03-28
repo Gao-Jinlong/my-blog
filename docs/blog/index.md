@@ -20,9 +20,10 @@
 - [ ] 服务端渲染 <Badge text="pending" type="info"/>
 - [ ] 多媒体流 <Badge text="pending" type="info"/>
 - [ ] http 缓存 <Badge text="pending" type="info"/>
-- [ ] buffer <Badge text="pending" type="info"/>
 - [ ] sass 主题切换 <Badge text="pending" type="info"/>
-- [ ] 跨站登录状态 <Badge text="pending" type="info"/>
+- [ ] 元框架 Nuxt <Badge text="pending" type="info"/>
+- [ ] @vueuse/motion + @vueuse/gesture <Badge text="pending" type="info"/>
+- [ ] @vueuse/core <Badge text="pending" type="info"/>
 
 ### 读书笔记
 
