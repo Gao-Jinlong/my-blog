@@ -35,3 +35,8 @@
 
 - [ ] clean code 整洁代码实践 <Badge text="doing" type="tip"/>
 - [ ] 代码规范 <Badge text="pending" type="info"/>
+
+- [ ] 代码整洁之道——如何写出高质量的代码 <Badge text="pending" type="info"/>
+- [ ] 编程实践——函数式编程的魅力
+- [ ] 项目搭建及依赖库、编辑器插件的推荐
+- [ ] 性能优化
