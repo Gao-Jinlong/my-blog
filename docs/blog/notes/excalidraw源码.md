@@ -95,3 +95,9 @@ export const getFrame = () => {
   }
 };
 ```
+
+#### getSelection
+
+https://developer.mozilla.org/zh-CN/docs/Web/API/Window/getSelection
+
+`getSelection()` 方法返回一个 Selection 对象，表示用户选择的文本范围或光标的当前位置。
