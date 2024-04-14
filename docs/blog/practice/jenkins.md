@@ -19,4 +19,4 @@ docker run ^
 
 **踩坑:**
 
-官网中文文档中使用的是 `jenkinsci/blueocean` 镜像，但是该镜像已很久未更新，目前最新的长期支持（LST）镜像是 `jenkins/jenkins:lts`。
+官网中文文档中使用的是 `jenkinsci/blueocean` 镜像，此镜像并非官方镜像，而是官方的自定义镜像安装了 blueocean 插件详见[在 Jenkins 官方文档中发现的"彩蛋"（Docker 篇）](https://juejin.cn/post/7154226427544469541)，该镜像已经长期没有维护，版本已经无法正常运行，目前最新的长期支持（LST）镜像是 `jenkins/jenkins:lts`。
