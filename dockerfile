@@ -31,8 +31,8 @@ WORKDIR /var/www/blog.com
 COPY --from=prod-deps /var/www/blog.com/node_modules /var/www/blog.com/node_modules
 COPY --from=build-stage /var/www/blog.com/docs/.vitepress/dist .
 
-COPY ./nginx.conf /etc/nginx/nginx.conf
+COPY ./my-blog.nginx.conf /etc/nginx/sites-enabled
 
-# EXPOSE 80
+EXPOSE 80
 
 # CMD ["node", "/app/main.js"]
