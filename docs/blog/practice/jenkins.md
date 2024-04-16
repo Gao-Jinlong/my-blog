@@ -86,3 +86,14 @@ sudo tar -zxcf dist.tar.gz
 # 删除压缩包
 sudo rm -rf dist.tar.gz
 ```
+
+### 运维操作
+
+> 踩了个大坑，构建时磁盘 io 会占满导致响应变慢，但并没有失败，纯阿里 99 的 ecs 磁盘太烂！
+
+iotop 查看磁盘读写情况
+
+```bash
+sudo apt-get install iotop
+sudo iotop
+```
