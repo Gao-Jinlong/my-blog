@@ -27,6 +27,8 @@ docker run --name jenkins-docker \
 -p 2376:2376 \
 --storage-driver overlay2 \
 docker:dind
+
+docker run --name jenkins-docker --restart=always -d --privileged --network jenkins --network-alias docker --env DOCKER_TLS_CERTDIR=/certs -v jenkins-docker-certs:/certs/client -v jenkins-data:/var/jenkins_home -p 2376:2376 docker:dind
 ```
 
 启动 jenkins 容器
