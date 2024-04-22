@@ -17,6 +17,34 @@ export default () => {
         }),
       ],
     },
+    head: [
+      [
+        "script",
+        {
+          async: "",
+          src: "https://www.googletagmanager.com/gtag/js?id=G-TD35ZQXL2E",
+          crossorigin: "anonymous",
+        },
+      ],
+      [
+        "script",
+        {},
+        `window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+      
+        gtag('config', 'G-TD35ZQXL2E');`,
+      ],
+      [
+        "script",
+        {},
+        `(function(c,l,a,r,i,t,y){
+          c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+          t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+          y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+      })(window, document, "clarity", "script", "m0nmyla1jj");`,
+      ],
+    ],
     title: "ginlon的定义域",
     lastUpdated: true,
     themeConfig: {
