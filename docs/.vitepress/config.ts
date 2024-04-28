@@ -6,8 +6,8 @@ import ElementPlus from "unplugin-element-plus/vite";
 
 // https://vitepress.dev/reference/site-config
 export default () => {
-  const PRACTICE_BASE_PATH = "/blog/practice/";
-  const NOTES_BASE_PATH = "/blog/notes/";
+  const PRACTICE_BASE_PATH = "/blog/practice";
+  const NOTES_BASE_PATH = "/blog/notes";
   return defineConfig({
     vite: {
       plugins: [
@@ -66,15 +66,19 @@ export default () => {
             items: [
               {
                 text: "搭建阿里云服务器",
-                link: `${PRACTICE_BASE_PATH}搭建阿里云服务器.md`,
+                link: `${PRACTICE_BASE_PATH}/搭建阿里云服务器.md`,
               },
               {
                 text: "我的响应式是如何丢掉的",
-                link: `${PRACTICE_BASE_PATH}我的响应式是如何丢掉的.md`,
+                link: `${PRACTICE_BASE_PATH}/我的响应式是如何丢掉的.md`,
               },
               {
                 text: "前端项目搭建",
-                link: `${PRACTICE_BASE_PATH}前端项目搭建.md`,
+                link: `${PRACTICE_BASE_PATH}/前端项目搭建.md`,
+              },
+              {
+                text: "openlayers with OffscreenCanvas",
+                link: `${PRACTICE_BASE_PATH}/openlayersWithOffscreenCanvas/index.md`,
               },
             ],
           },
@@ -83,15 +87,15 @@ export default () => {
             items: [
               {
                 text: "CSS 基础知识",
-                link: `${NOTES_BASE_PATH}CSS基础知识.md`,
+                link: `${NOTES_BASE_PATH}/CSS基础知识.md`,
               },
               {
                 text: "页面性能优化",
-                link: `${NOTES_BASE_PATH}页面性能优化.md`,
+                link: `${NOTES_BASE_PATH}/页面性能优化.md`,
               },
               {
                 text: "VideoDecoder",
-                link: `${NOTES_BASE_PATH}VideoDecoder.md`,
+                link: `${NOTES_BASE_PATH}/VideoDecoder.md`,
               },
             ],
           },
