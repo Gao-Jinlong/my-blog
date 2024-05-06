@@ -56,6 +56,12 @@ rustup toolchain install stable
 
 NAPI-RS 是一个用于在 Rust 中构建预编译 Node.js 插件的框架。
 
+使用 NAPI-RS 会将我们的 Rust 代码编译为不同平台的二进制文件，然后在我们的 Node 项目的 `package.json` 文件的 `optionalDependencies` 中引用这些二进制文件，然后就可以在我们的 Node 项目中通过 `require` 或 `import` 的方式使用这些 Rust 代码了。
+
+NAPI-RS 会自动生成 `.js` 和 `.d.ts` 的入口文件并根据不同系统导入不同二进制文件，这样我们就可以在 Node 项目中以模块的形式引入 Rust 代码了。
+
+使用案例如下：
+
 lib.rs
 
 ```rust
@@ -92,6 +98,19 @@ console.log(fibonacci(5)); // 5
 
 当用户在终端输入 `rolldown` 时，系统会查找这个命令并执行相关的 JavaScript 文件。
 
+```json
+{
+  "optionalDependencies": {
+    // 可选依赖，用于链接不同平台的二进制文件
+    "@rolldown/binding-darwin-xxx": "workspace:*"
+  }
+}
+```
+
+可选依赖项安装失败时，不会导致整个安装失败，而是会在安装完成后输出错误信息。
+
+但 npm 并不会处理依赖缺失的情况，在代码中使用可选依赖项时需要自行进行错误处理。
+
 #### Workspace
 
 默认情况下，如果可用包与声明的范围匹配，pnpm 将从工作区链接包。
@@ -105,3 +124,5 @@ pnpm 支持 `workspace` 协议（protocol），如果设置`"foo":"workspace:*"`
 
 如果想要使用不同的别名，可以使用如下语法：`"bar":"workspace:foo@1.0.0"`。
 在发布前，别名将转换为常规别名依赖项 `"bar":"npm:foo@1.0.0"`。
+
+> 需要注意的是 `workspace` 匹配的是包名即 `package.json` 中的 `name` 项，而不是路径。
