@@ -84,6 +84,10 @@ import { fibonacci } from "./index.js";
 console.log(fibonacci(5)); // 5
 ```
 
+> NAPI-RS 针对的是 Node 项目生成的是二进制文件，所以在浏览器端无法使用。对应的浏览器可以使用 [wasm-pack](https://github.com/rustwasm/wasm-pack) 将 Rust 代码编译为 WebAssembly 模块。
+>
+> [编译 Rust 为 WebAssembly](https://developer.mozilla.org/zh-CN/docs/WebAssembly/Rust_to_Wasm)
+
 ### pnpm
 
 #### package.json
@@ -126,3 +130,15 @@ pnpm 支持 `workspace` 协议（protocol），如果设置`"foo":"workspace:*"`
 在发布前，别名将转换为常规别名依赖项 `"bar":"npm:foo@1.0.0"`。
 
 > 需要注意的是 `workspace` 匹配的是包名即 `package.json` 中的 `name` 项，而不是路径。
+
+## source code
+
+### 执行流程分析
+
+根据 `package.json` 中的 `bin` 配置找到 `rolldown` 命令的入口文件 `./bin/cli.js`。
+
+找到 `cli.mjs` 文件发现入口文件 `packages\rolldown\src\cli\index.ts` 和入口函数 `runMain`，最终找到实例构建函数
+
+![alt text](image.png)
+
+通过 `RolldownBuild` js 类引入并创建了 `Rust` 构建的二进制文件。
