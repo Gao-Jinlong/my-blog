@@ -88,15 +88,24 @@ export default () => {
             items: [
               {
                 text: "CSS 基础知识",
-                link: `${NOTES_BASE_PATH}/CSS基础知识.md`,
+                link: `${NOTES_BASE_PATH}/CSS基础知识/index.md`,
               },
               {
-                text: "页面性能优化",
-                link: `${NOTES_BASE_PATH}/页面性能优化.md`,
+                text: "性能优化",
+                link: `${NOTES_BASE_PATH}/性能优化/index.md`,
               },
+              {
+                text: "编程实践",
+                link: `${NOTES_BASE_PATH}/编程实践/index.md`,
+              },
+            ],
+          },
+          {
+            text: "demo-test",
+            items: [
               {
                 text: "VideoDecoder",
-                link: `${NOTES_BASE_PATH}/VideoDecoder.md`,
+                link: `${NOTES_BASE_PATH}/VideoDecoder/index.md`,
               },
               {
                 text: "rolldown源码学习",
