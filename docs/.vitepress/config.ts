@@ -50,6 +50,7 @@ export default () => {
     themeConfig: {
       // https://vitepress.dev/reference/default-theme-config
       logo: "/avatar.jpg",
+      outline: [2, 4],
       nav: [
         { text: "首页", link: "/" },
         { text: "文章", link: "/blog/" },
@@ -96,6 +97,10 @@ export default () => {
               {
                 text: "VideoDecoder",
                 link: `${NOTES_BASE_PATH}/VideoDecoder.md`,
+              },
+              {
+                text: "rolldown源码学习",
+                link: `${NOTES_BASE_PATH}/rolldown源码/index.md`,
               },
             ],
           },
