@@ -2,8 +2,8 @@
 
 [MDN OffscreenCanvas](https://developer.mozilla.org/zh-CN/docs/Web/API/OffscreenCanvas)
 
-<script setup>
+<!-- <script setup>
   import BaseMap from './components/BaseMap.vue'
-</script>
+</script> -->
 
 <BaseMap></BaseMap>

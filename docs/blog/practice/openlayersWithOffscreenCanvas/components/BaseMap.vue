@@ -15,7 +15,6 @@ import { WindLayer } from "ol-wind";
 import { ImageCanvas as ImageCanvasSource } from "ol/source";
 import { Tile as TileLayer, Image as ImageLayer } from "ol/layer";
 import { type FunctionType } from "ol/source/ImageCanvas";
-
 onMounted(() => {
   const map = new Map({
     layers: [
