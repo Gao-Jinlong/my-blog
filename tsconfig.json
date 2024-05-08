@@ -32,7 +32,8 @@
     "docs/**/*.ts",
     "docs/**/*.d.ts",
     "docs/**/*.tsx",
-    "docs/**/*.vue"
+    "docs/**/*.vue",
+    "docs/.vitepress/components/Copyright.vue"
   ],
   "exclude": [
     "node_modules",

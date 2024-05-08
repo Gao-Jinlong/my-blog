@@ -3,6 +3,7 @@ import AutoImport from "unplugin-auto-import/vite";
 import Components from "unplugin-vue-components/vite";
 import { ElementPlusResolver } from "unplugin-vue-components/resolvers";
 import ElementPlus from "unplugin-element-plus/vite";
+import { fileURLToPath, URL } from "node:url";
 
 // https://vitepress.dev/reference/site-config
 export default () => {
@@ -16,6 +17,17 @@ export default () => {
           dts: true,
         }),
       ],
+      resolve: {
+        // 使用 alias 覆盖源码中的默认 alias，从而达到替换默认组件的目的
+        alias: [
+          {
+            find: /^.*\/VPHero\.vue$/,
+            replacement: fileURLToPath(
+              new URL("./components/MyHero.vue", import.meta.url)
+            ),
+          },
+        ],
+      },
     },
     head: [
       [

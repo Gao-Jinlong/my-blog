@@ -18,10 +18,10 @@ const isHome = computed(() => frontmatter.value.layout === "home");
 
   width: 80%;
   margin: 0 auto;
-  border-top: 1px solid #eee;
+  border-top: 1px solid var(--vp-c-divider);
 
   a {
-    color: #999;
+    color: var(--vp-c-text-1);
 
     &:hover {
       color: var(--vp-c-brand);
