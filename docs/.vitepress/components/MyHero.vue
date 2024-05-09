@@ -1,7 +1,9 @@
 <script setup lang="ts">
-import { type Ref, inject } from "vue";
+import { type Ref } from "vue";
 import type { DefaultTheme } from "vitepress/theme";
-import { VPButton, VPImage } from "vitepress/theme";
+import { VPButton, VPImage, VPBadge } from "vitepress/theme";
+import useTypewriter from "./useTypeWriter";
+import { useI18n } from "vue-i18n";
 
 export interface HeroAction {
   theme?: "brand" | "alt";
@@ -19,7 +21,24 @@ defineProps<{
   actions?: HeroAction[];
 }>();
 
+const i18n = useI18n();
+const { t: $t } = i18n;
+
 const heroImageSlotExists = inject("hero-image-slot-exists") as Ref<boolean>;
+
+const slogans = [
+  $t("home.hero.selfIntroduction"),
+  $t("home.hero.slogan1"),
+  $t("home.hero.slogan2"),
+];
+const tagline = $t("home.hero.tagline");
+
+const { text, blink } = useTypewriter({
+  content: slogans,
+  speed: 60,
+  hold: 2500,
+  loop: true,
+});
 </script>
 
 <template>
@@ -28,11 +47,22 @@ const heroImageSlotExists = inject("hero-image-slot-exists") as Ref<boolean>;
       <div class="main">
         <slot name="home-hero-info-before" />
         <slot name="home-hero-info">
-          <h1 v-if="name" class="name">
-            <span v-html="name" class="clip"></span>
+          <h1 class="name">
+            <span class="clip">{{ $t("home.hero.hello") }}</span>
           </h1>
-          <p v-if="text" v-html="text" class="text"></p>
-          <p v-if="tagline" v-html="tagline" class="tagline"></p>
+          <p class="text">
+            <span>{{ text }}</span>
+            <span
+              style="font-weight: 300"
+              :style="{
+                visibility: blink ? 'visible' : 'hidden',
+              }"
+              >|</span
+            >
+          </p>
+          <p class="tagline">
+            {{ tagline }}
+          </p>
         </slot>
         <slot name="home-hero-info-after" />
 
@@ -42,7 +72,7 @@ const heroImageSlotExists = inject("hero-image-slot-exists") as Ref<boolean>;
               tag="a"
               size="medium"
               :theme="action.theme"
-              :text="action.text"
+              :text="$t(action.text)"
               :href="action.link"
               :target="action.target"
               :rel="action.rel"

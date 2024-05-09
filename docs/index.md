@@ -3,18 +3,15 @@
 layout: home
 
 hero:
-  name: "你好"
-  text: "我是 Ginlon"
-  tagline: "平平无奇程序员"
   image:
     src: https://avatars.githubusercontent.com/u/41514616?v=4
     alt: Ginlon's avatar
   actions:
     - theme: brand
-      text: 博客文档
+      text: home.button.blog
       link: /blog/index
     - theme: alt
-      text: 关于
+      text: home.button.aboutMe
       link: /author/index
 
 features:

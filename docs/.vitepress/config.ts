@@ -32,29 +32,19 @@ export default () => {
     head: [
       [
         "script",
-        {
-          async: "",
-          src: "https://www.googletagmanager.com/gtag/js?id=G-TD35ZQXL2E",
-          crossorigin: "anonymous",
-        },
-      ],
-      [
-        "script",
-        {},
-        `window.dataLayer = window.dataLayer || [];
-        function gtag(){dataLayer.push(arguments);}
-        gtag('js', new Date());
-      
-        gtag('config', 'G-TD35ZQXL2E');`,
-      ],
-      [
-        "script",
         {},
         `(function(c,l,a,r,i,t,y){
           c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
           t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
           y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
       })(window, document, "clarity", "script", "m0nmyla1jj");`,
+      ],
+      [
+        "link",
+        {
+          rel: "icon",
+          href: "https://gravatar.com/avatar/e5ea5b87670929cf424dd71b240c2168?size=64&cache=1715266837113",
+        },
       ],
     ],
     title: "ginlon的定义域",
@@ -131,5 +121,17 @@ export default () => {
 
       socialLinks: [{ icon: "github", link: "https://github.com/Gao-Jinlong" }],
     },
+    lang: "zh-CN",
+    // locales: {
+    //   root: {
+    //     label: "English",
+    //     lang: "en",
+    //   },
+    //   fr: {
+    //     label: "French",
+    //     lang: "fr", // optional, will be added  as `lang` attribute on `html` tag
+    //     link: "/fr/guide", // default /fr/ -- shows on navbar translations menu, can be external
+    //   },
+    // },
   });
 };
