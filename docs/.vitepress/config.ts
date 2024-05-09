@@ -47,7 +47,7 @@ export default () => {
         },
       ],
     ],
-    title: "ginlon的定义域",
+    title: "ginlon's domain",
     lastUpdated: true,
     themeConfig: {
       // https://vitepress.dev/reference/default-theme-config
