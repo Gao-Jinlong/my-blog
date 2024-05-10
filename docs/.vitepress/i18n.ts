@@ -9,7 +9,7 @@ const i18nConfig: I18nOptions = {
       home: {
         hero: {
           hello: "Hello, World!",
-          selfIntroduction: "Im Ginlon",
+          selfIntroduction: "I'm Ginlon",
           slogan1: "A Frontend Engineer",
           slogan2: "Coding Enthusiast",
           tagline: "The only way to know for sure is to try.",
