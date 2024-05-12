@@ -69,7 +69,7 @@ export default () => {
             items: [
               {
                 text: "搭建阿里云服务器",
-                link: `${PRACTICE_BASE_PATH}/搭建阿里云服务器.md`,
+                link: `${PRACTICE_BASE_PATH}/搭建阿里云服务器/index.md`,
               },
               {
                 text: "我的响应式是如何丢掉的",

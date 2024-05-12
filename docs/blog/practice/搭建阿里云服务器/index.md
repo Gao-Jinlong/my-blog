@@ -142,3 +142,57 @@ scp -r -C /path/to/local/file/* username@server_ip:/var/www/example.com.conf
 - server_ip 是服务器的 IP 地址。
 - /path/to/remote/directory 是服务器上的目标目录。
 - 输入服务器上的用户密码（如果需要），然后文件将被上传到服务器的指定目录。
+
+### SSH 免密登录
+
+1. 打开阿里云 ecs 控制台，找到 `网络与安全` > `密钥对`，创建密钥对并绑定到 ecs 实例，创建密钥对时保存 `.pem` 私钥文件到本地
+
+2. 将私钥文件放到 `~/.ssh` 目录下，并设置权限
+
+```bash
+chmod 400 ~/.ssh/[.pem 文件名]
+```
+
+> chmod 修改文件权限
+> 400 是权限的一种表示方式，第一位表示所有者的权限，第二位表示所有者所在组的权限，第三位表示其他用户的权限
+> 4 表示读权限，2 表示写权限，1 表示执行权限，0 表示无权限（每个二进制位表示一种权限，可以组合使用，如 7 表示读写执行权限）
+> -R 递归修改权限
+
+此时可以使用 `ssh -i ~/.ssh/[.pem 文件名] root@ip` 命令登录服务器
+
+1. 配置 `~/.ssh/config` 文件，添加别名
+
+```bash
+cd ~/.ssh
+vim config
+```
+
+添加如下内容：
+
+```bash
+Host ecs # 实例别名
+HostName [公网 ip] # 服务器公网 ip
+User [登入用户名] # 登入用户名
+IdentityFile ~/.ssh/[.pem 文件名] # 私钥文件路径
+```
+
+保存退出，重启 ssh 服务
+
+```bash
+service ssh restart
+```
+
+使用别名登入服务器
+
+```bash
+ssh ecs
+```
+
+> 注: 阿里云配置了密钥对后，默认不能使用密码登录，需要配置密码登录
+> 登入服务器后，修改 `/etc/ssh/sshd_config` 文件，将 `PasswordAuthentication no` 改为 `PasswordAuthentication yes`，重启 ssh 服务
+>
+> ![alt text](image.png)
+
+## 参考
+
+[使用第三方客户端通过密钥认证登录 Linux 实例](https://help.aliyun.com/zh/ecs/user-guide/connect-to-a-linux-instance-by-using-an-ssh-key-pair?spm=a2c4g.11186623.0.i9#concept-ucj-wrx-wdb)

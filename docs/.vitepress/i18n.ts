@@ -1,9 +1,5 @@
-import { createI18n, type I18nOptions } from "vue-i18n";
-
-const i18nConfig: I18nOptions = {
-  legacy: false,
+const i18nConfig = {
   // locale: "zh-CN",
-  fallbackLocale: "zh-CN",
   messages: {
     en: {
       home: {
@@ -54,5 +50,4 @@ const i18nConfig: I18nOptions = {
     },
   },
 };
-const i18n = createI18n(i18nConfig);
-export default i18n;
+export { i18nConfig };

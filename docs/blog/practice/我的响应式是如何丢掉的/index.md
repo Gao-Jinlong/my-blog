@@ -73,7 +73,13 @@ newInfo.address = "HongKong";
 </script>
 ```
 
-执行结果<br />![image.png](https://cdn.nlark.com/yuque/0/2023/png/35025722/1681776060725-9ff3bf65-d11d-4a05-af23-7e253353d25c.png#averageHue=%23f3f3f3&clientId=u577aca62-2998-4&from=paste&height=205&id=u4d0749b4&originHeight=205&originWidth=435&originalType=binary&ratio=1&rotation=0&showTitle=false&size=10949&status=done&style=shadow&taskId=u8f741315-39de-49fb-a153-849d636a182&title=&width=435)<br />看起来非常正确，没有任何问题，但是潘多拉的魔盒已经打开了。<br />将上面代码中最后的赋值语句（30 行）改为异步操作就可以让他原形毕露
+执行结果
+
+![image.png](./image.png)
+
+看起来非常正确，没有任何问题，但是潘多拉的魔盒已经打开了。
+
+将上面代码中最后的赋值语句（30 行）改为异步操作就可以让他原形毕露
 
 ```javascript
 // info.address = 'HongKong'
@@ -83,7 +89,13 @@ Promise.resolve().then(() => {
 });
 ```
 
-结果<br />![image.png](https://cdn.nlark.com/yuque/0/2023/png/35025722/1681778217595-aa0cba89-c53b-479c-a96e-661596bcb27b.png#averageHue=%23f1f1f1&clientId=u577aca62-2998-4&from=paste&height=181&id=u2f7c659f&originHeight=181&originWidth=400&originalType=binary&ratio=1&rotation=0&showTitle=false&size=10597&status=done&style=shadow&taskId=uc9f2b941-5290-4e2e-8a8e-d8c145aaf53&title=&width=400)<br />![image.png](https://cdn.nlark.com/yuque/0/2023/png/35025722/1681778774538-b311904c-befa-4c66-bd42-b900191ce858.png#averageHue=%23f5f6f5&clientId=u577aca62-2998-4&from=paste&height=166&id=u931f4684&originHeight=167&originWidth=602&originalType=binary&ratio=1&rotation=0&showTitle=false&size=21024&status=done&style=shadow&taskId=u8b7553e2-0a92-4e97-b016-c742e3a5810&title=&width=598)<br />哦天哪，这太可怕了，我们在程序中访问到的值和在页面中访问到的值不是同一个值！
+结果
+
+![image.png](image2.png)
+
+![image.png](image3.png)
+
+哦天哪，这太可怕了，我们在程序中访问到的值和在页面中访问到的值不是同一个值！
 :::warning
 事实上此时只要通过`someone`进行查询、修改而不是通过 `newInfo`，一切依然是正常的，后面再来解释原因
 :::
@@ -114,7 +126,19 @@ for (let i = 0; i < 10; i++) {
 </script>
 ```
 
-我们写了一个循环对一个响应式的数据进行自增，并且使用`watch`监听这个响应式数据的变化<br />执行结果<br />![image.png](https://cdn.nlark.com/yuque/0/2023/png/35025722/1681780244167-c25dba7d-aa31-454e-b3ba-12be079e4a97.png#averageHue=%23fdfdfd&clientId=u577aca62-2998-4&from=paste&height=72&id=u2bf32558&originHeight=72&originWidth=400&originalType=binary&ratio=1&rotation=0&showTitle=false&size=1817&status=done&style=shadow&taskId=ub9471eac-69d3-48cb-9ccf-b29e3197b90&title=&width=400)<br />![image.png](https://cdn.nlark.com/yuque/0/2023/png/35025722/1681780268952-982e3dbb-ffe7-4b9d-bd2a-bf8251c63600.png#averageHue=%23f5f6f5&clientId=u577aca62-2998-4&from=paste&height=178&id=u2bcfe583&originHeight=178&originWidth=598&originalType=binary&ratio=1&rotation=0&showTitle=false&size=22469&status=done&style=shadow&taskId=u0c8214ed-aad1-4e36-8555-65ca4551bce&title=&width=598)<br />可以看到`watch`只执行了一次，也就是说只监听到了一次响应式数据变化，为什么？<br />这是因为 vue 的内部优化将所有的副作用（响应式数据变化引起的更新）放到了一个**微任务**队列中，这样就可以避免掉无用的 DOM 更新，极大地节省性能消耗。<br />实现方法是使用`Promise.resolve`创建一个微任务队列，并将所有的副作用函数放到这个`Promise`的 `.then`中执行（没错就是 `nextTick`）。（事实上`watch`、`computed`等一系列的可配置特性都与这个调度执行（scheduler）有关，此处不展开，感兴趣可以参考《Vue.js 设计与实现》4.7 调度执行 章节）。
+我们写了一个循环对一个响应式的数据进行自增，并且使用`watch`监听这个响应式数据的变化
+
+执行结果
+
+![image.png](image4.png)
+
+![image.png](image5.png)
+
+可以看到`watch`只执行了一次，也就是说只监听到了一次响应式数据变化，为什么？
+
+这是因为 vue 的内部优化将所有的副作用（响应式数据变化引起的更新）放到了一个**微任务**队列中，这样就可以避免掉无用的 DOM 更新，极大地节省性能消耗。
+
+实现方法是使用`Promise.resolve`创建一个微任务队列，并将所有的副作用函数放到这个`Promise`的 `.then`中执行（没错就是 `nextTick`）。（事实上`watch`、`computed`等一系列的可配置特性都与这个调度执行（scheduler）有关，此处不展开，感兴趣可以参考《Vue.js 设计与实现》4.7 调度执行 章节）。
 
 ```typescript
 const tick = Promise.resolve();
@@ -193,7 +217,7 @@ someone.info = newInfo;
 
 > 【⚠️ 警告】不推荐使用该写法，对象内部字段的不可控可能会引起不可控的副作用，使用此方法传递一个字段非常多的对象时，会连续触发响应更新，一旦在页面中使用了该对象的字段则会导致高频率的刷新页面。
 
-至于为什么可以维持响应式，我们可以看一下 ECMAScript 关于`Object.assign`的实现标准说明<br />![image.png](https://cdn.nlark.com/yuque/0/2023/png/35025722/1681865721640-57fed049-8a8f-4330-aac0-be6130fab5a8.png#averageHue=%23f7f7f7&clientId=u577aca62-2998-4&from=paste&height=513&id=u4cbebd0f&originHeight=513&originWidth=1001&originalType=binary&ratio=1&rotation=0&showTitle=false&size=120512&status=done&style=shadow&taskId=u2ac9fe1f-3f7c-4e66-8181-5097a84d00a&title=&width=1001)<br />可以看到最后值是通过`set`的方式添加给`target`的，而 vue 的响应式系统是可以拦截`set`的因此响应式系统是可以正确的执行的。
+至于为什么可以维持响应式，我们可以看一下 ECMAScript 关于`Object.assign`的实现标准说明<br />![image.png](image6.png)<br />可以看到最后值是通过`set`的方式添加给`target`的，而 vue 的响应式系统是可以拦截`set`的因此响应式系统是可以正确的执行的。
 
 > 其实还可以看到`Object.assign`还访问了`sources`的`get`，也就是说响应式系统是可以追踪到依赖的，但是不建议使用这个特性，会使数据流向变得难以追踪。
 

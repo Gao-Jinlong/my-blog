@@ -1,9 +1,8 @@
 <script setup lang="ts">
-import { type Ref } from "vue";
+import { type Ref, inject } from "vue";
 import type { DefaultTheme } from "vitepress/theme";
 import { VPButton, VPImage, VPBadge } from "vitepress/theme";
-import useTypewriter from "./useTypeWriter";
-import { useI18n } from "vue-i18n";
+import useTypewriter from "../hooks/useTypeWriter";
 
 export interface HeroAction {
   theme?: "brand" | "alt";
@@ -21,9 +20,7 @@ defineProps<{
   actions?: HeroAction[];
 }>();
 
-const i18n = useI18n();
-const { t: $t } = i18n;
-
+const $t = inject("$t") as (key: string) => string;
 const heroImageSlotExists = inject("hero-image-slot-exists") as Ref<boolean>;
 
 const slogans = [
