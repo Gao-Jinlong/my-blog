@@ -10,13 +10,13 @@
 
 代码的可维护性与可扩展性不随项目规模的增长而线性衰减。
 
-![alt text](image.png)
+![alt text](image-1.png)
 
 **可预测性**
 
 从需求或者错误信息可以直观快速的定位到代码具体位置。
 
-可以快速了解可以使用哪些已有的代码（组件、依赖以及公用方法等）来解决问题或完成需求。
+可以快速了解可以使用或修改哪些已有的代码（组件、依赖以及公用方法等）来解决问题或完成需求。
 
 ## 项目搭建
 
@@ -142,6 +142,8 @@ interface StudentDeleteDto extends Pick<StudentDto, "id"> {}
 
 学习自 React 的设计思想，使用函数式编程的方式实现面向对象编程中对象的作用，将相关的状态和行为封装在同一个作用域中。
 
+在 vue 中与之相似的概念是 [Composables](https://cn.vuejs.org/guide/reusability/composables.html#composables)
+
 ```typescript
 function useStudent() {
   const student = ref<StudentDto>({
@@ -206,21 +208,23 @@ export default function useTime(props: TimeProps) {
 
   return {
     time,
-    config,
   };
 }
 ```
 
 hook 的最佳使用规范可以参考 react 的官方文档，如：
 
-- 不能在循环、条件语句中使用 hook
-- hook 的命名必须以 `use` 开头
+- 不能在循环、分支语句中使用 hook
+- hook 必须在同步代码中使用，不能在异步代码后调用
+- 约定 hook 的命名以 `use` 开头
 
 虽然在 vue3 中，在分支语句中使用 hook 不会报错，但也不应该这样做，因为使用 hook 的本意是分离状态和副作用，使“纯”的组件函数可以“勾住”组件中需要的状态和副作用。
 
 hook 在这里的作用就好比一个盒子（或者说函数式编程中的函子），屏蔽了副作用的细节，使得纯的函数组件不需要了解副作用的细节，只需要关注自身有哪些 hook 即可，对于相同（类型）的输入（props）始终产生相同的 hooks ，从而保持函数组建的纯粹性。
 
 而一旦在分支或循环语句中使用了 hook 那就给组建本身添加了一种副作用，对于同类型的输入可能产生不同的 hook，这就破坏了函数组件的纯粹性。
+
+不能在异步语句中使用 hook 是因为 vue 提供的 composition API 是需要绑定组件的 scope 的，而异步代码的执行环境是不确定的，可能会导致 hook 的执行环境不正确。
 
 ### 异常情况处理
 
