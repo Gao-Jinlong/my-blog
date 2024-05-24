@@ -26,7 +26,7 @@ const foo = new Foo();
 console.log(foo.__proto__ === Foo.prototype); // true
 ```
 
-重新赋值 `Constructor.prototype` 后创建的新实例和重新赋值前创建的旧实例引用的不是同一个 `[[Prototype]]`
+所有实例的 `[[Prototype]]` 引用相同的对象，所以可以通过修改 `Foo.prototype` 来修改所有实例的原型。
 
 ```javascript
 function Box(value) {
@@ -42,6 +42,38 @@ Box.prototype.getValue = function () {
   return this.value + 1;
 };
 box.getValue(); // 2
+```
+
+重新赋值 `Constructor.prototype` 后创建的新实例和重新赋值前创建的旧实例引用的不是同一个 `[[Prototype]]`
+
+`constructor` 也会指向新的 `prototype` 对象的构造函数，`instanceof` 判断的是构造函数的 `prototype` 是否在实例的原型链上，所以仍然会返回 `true`。
+
+```javascript
+function Box(value) {
+  this.value = value;
+}
+Box.prototype.getValue = function () {
+  return this.value;
+};
+const box = new Box(1);
+
+// 在创建实例后修改 Box.prototype
+Box.prototype = {
+  getValue() {
+    return this.value + 1;
+  },
+};
+const newBox = new Box(2);
+
+console.log(box.getValue()); // 1
+console.log(newBox.getValue()); // 3
+
+console.log(box instanceof Box); // false
+console.log(box.constructor === Box); // true
+
+console.log(newBox instanceof Box); // true
+console.log(newBox.constructor === Box); //false
+console.log(newBox.constructor === Object); // true
 ```
 
 箭头函数没有默认原型
