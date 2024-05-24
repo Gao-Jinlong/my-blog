@@ -1,5 +1,6 @@
 # 网页关键指标优化建议
-> 原地址：[Web / Chrome｜2023 年核心网页指标九大优化](https://www.bilibili.com/video/BV1xk4y1w7re/?share_source=copy_web&vd_source=e1b639c86f0cbba65e1ddf0de89f52ec)
+
+> 原地址：[Web / Chrome ｜ 2023 年核心网页指标九大优化](https://www.bilibili.com/video/BV1xk4y1w7re/?share_source=copy_web&vd_source=e1b639c86f0cbba65e1ddf0de89f52ec)
 
 ![Alt text](image-14.jpg)
 
@@ -17,7 +18,7 @@ LCP 是大多数网站都难以达到的指标
 
 ![Alt text](image-2.jpg)
 
-由此我们就得到了第一个优化方案  
+由此我们就得到了第一个优化方案
 
 ### 使用 `<img>` 元素或预加载将图像纳入 HTML 中
 
@@ -36,7 +37,7 @@ LCP 是大多数网站都难以达到的指标
 ```ts
 /** 路由守卫 */
 router.beforeEach((to, from, next) => {
-  const preloadImages = to.meta?.preloadImages as string[]
+  const preloadImages = to.meta?.preloadImages as string[];
   /**
    * 图片预加载
    * @description 越过 js 代码分析，提前触发浏览器的图片加载机制
@@ -47,31 +48,31 @@ router.beforeEach((to, from, next) => {
    */
   if (preloadImages.length) {
     preloadImages.forEach((item: string) => {
-      const img = new Image()
-      img.src = item
+      const img = new Image();
+      img.src = item;
       // img.referrerPolicy = "no-referrer"
       // img.crossOrigin = "anonymous"
-    })
+    });
   }
 
-  next()
-})
+  next();
+});
 ```
 
 可以借助 `onload` 事件实现顺序加载
 
 ```ts
-const preloadImages = []
-router.beforeEach(()=>{
-  let i = 0
-  function loadImg(i){
-    new img = new Image()
-    img.src = preloadImages[i]
-    img.onload = function(){
-      loadImg(i+1)
-    }
+const preloadImages = [];
+router.beforeEach(() => {
+  let i = 0;
+  function loadImg(i) {
+    new img() = new Image();
+    img.src = preloadImages[i];
+    img.onload = function () {
+      loadImg(i + 1);
+    };
   }
-})
+});
 ```
 
 ### Fetch Priority API
@@ -95,6 +96,7 @@ router.beforeEach(()=>{
 ### 使用 CDN 优化第一字节时间（TTFB）
 
 CDN （内容分发网络）的优点：
+
 - 就近访问
 - 负载均衡
 - 缓存
@@ -161,6 +163,7 @@ bfcache 默认是开启的，但是有些 API 会导致 bfcache 失效，可以�
 最常见的原因是 `cache-control` 的值为 `no-store`，这会禁用 bfcache，或者在使用 `unload` 事件，这也会禁用 bfcache。
 
 还可以使用 NotRestoreReasons API 来查看页面为什么没有被缓存
+
 > PS：没找到 API 文档
 
 ### 关于动画
@@ -186,19 +189,72 @@ chrome 将长任务定义为超过 50ms 的任务
 javascript 本质上是单线程且贪婪的，一旦占据主线程就会一直执行，直到一个内容出现中断
 
 可以使用 `setTimeout` 将非关键的任务延迟执行
+
 ```js
-function yieldToMain(){
-  return new Promise(resolve=>setTimeout(resolve))
+function yieldToMain() {
+  return new Promise((resolve) => setTimeout(resolve));
 }
 
-async function longTask(){
-  await yieldToMain()
+async function longTask() {
+  await yieldToMain();
   // do something
-  await yieldToMain()
+  await yieldToMain();
   // do something
 }
 ```
 
+还可以使 `requestIdleCallback` API 将长任务（通常是循环）拆解到多个帧的空闲时间中执行
+
+```typescript
+/**
+ * 任务队列
+ */
+const tasks = [
+  // some tasks...
+];
+
+function runTask(deadline: IdleDeadline) {
+  // 当前帧剩余时间大于 0 且任务队列不为空时执行任务队列中的第一个任务，这里还可以考虑使用多个任务队列实现任务优先级的控制
+  while (deadline.timeRemaining() > 0 && tasks.length > 0) {
+    const task = tasks.shift();
+    task();
+  }
+
+  if (tasks.length > 0) {
+    requestIdleCallback(runTask);
+  }
+}
+
+requestIdleCallback(runTask);
+```
+
+使用 `requestIdleCallback` 时需要注意，safari 浏览器不支持这个 API, 可以使用 polyfill 降级为 `setTimeout` 实现相近的效果
+
+```typescript
+(function () {
+  if (!("requestIdleCallback" in window)) {
+    const FRAME_DURATION = 1000 / 60;
+
+    Object.defineProperty(window, "requestIdleCallback", {
+      configurable: true,
+      enumerable: false,
+      writable: false,
+      value: function (handler) {
+        let startTime = Date.now();
+
+        return setTimeout(function () {
+          handler({
+            didTimeout: false,
+            timeRemaining: function () {
+              return Math.max(0, FRAME_DURATION - (Date.now() - startTime));
+            },
+          });
+        }, 1);
+      },
+    });
+  }
+})();
+```
 
 还有一些实验性的 API
 
@@ -235,6 +291,12 @@ lighthouse 面板会有相关的检查
 
 这个 API 应该只用于渲染工作，如果安排了太多任务它会减慢自己的速度。
 
+`requestAnimationFrame` API 和 css 动画的性能非常相近，但是 css 动画仍然是更好的选择。
+
+为什么？关键是只要动画涉及的属性不引起 reflow（重新布局），就可以把采样操作移出主线程。
+
+最常见的属性是 CSS transform，如果元素被提升为一个 layer，transform 属性就可以在 GPU 中进行，这意味着更好的性能，特别是在移动设备上。
+
 ## 其他优化
 
 ### 压缩图片
@@ -245,9 +307,9 @@ lighthouse 面板会有相关的检查
 <link rel="dns-prefetch" href="https://fonts.googleapis.com/" />
 ```
 
-### 减少重绘和回流：
+### 减少重绘和回流
 
-为元素设置display: none，操作结束后再把它显示出来。因为在display属性为none的元素上进行的DOM操作不会引发回流和重绘。用一次回流替代多次回流
+为元素设置 display: none，操作结束后再把它显示出来。因为在 display 属性为 none 的元素上进行的 DOM 操作不会引发回流和重绘。用一次回流替代多次回流
 
 对于具有复杂动画的元素单独创建一个图层
 
@@ -258,6 +320,3 @@ lighthouse 面板会有相关的检查
 - [通过预加载可选字体来防止布局偏移和不可见文本 (FOIT) 闪烁](https://web.dev/articles/preload-optional-fonts?utm_source=lighthouse&utm_medium=devtools&hl=zh-cn)
 
 - [核心网页指标（core web vitals） 集合](https://web.dev/articles/vitals?hl=zh-cn)
-
-
-
