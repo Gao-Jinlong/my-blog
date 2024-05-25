@@ -55,8 +55,7 @@ export default () => {
       outline: [2, 4],
       nav: [
         { text: "首页", link: "/" },
-        { text: "文章", link: "/blog/" },
-        { text: "日志", link: "/journal/" },
+        { text: "笔记", link: "/blog/" },
         { text: "关于", link: "/author/" },
       ],
       search: {
@@ -73,7 +72,7 @@ export default () => {
               },
               {
                 text: "我的响应式是如何丢掉的",
-                link: `${PRACTICE_BASE_PATH}/我的响应式是如何丢掉的.md`,
+                link: `${PRACTICE_BASE_PATH}/我的响应式是如何丢掉的/index.md`,
               },
               {
                 text: "前端项目搭建",
@@ -116,7 +115,6 @@ export default () => {
             ],
           },
         ],
-        "/journal": [],
       },
 
       socialLinks: [{ icon: "github", link: "https://github.com/Gao-Jinlong" }],
