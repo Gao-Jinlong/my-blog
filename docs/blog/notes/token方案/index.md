@@ -55,6 +55,8 @@ Set-Cookie: token=123456; Max-Age=3600
 
 可以通过两个属性来设置 Cookie 的过期时间 `Expires` 或者 `Max-Age`，`Expires` 是一个 UTC 格式的时间字符串，表示 Cookie 的过期时间，`Max-Age` 是一个相对时间，表示 Cookie 的有效时间（单位为秒）。
 
+需要注意的是 Cookie 的有效时间判断采用的是客户端的时间，因此不能完全依赖于这个时间来判断 Cookie 的有效性。
+
 #### CSRF 攻击
 
 接下来我们会遇到第二个问题 **CSRF（跨站请求伪造） 攻击**，先来解释下什么是 CSRF 攻击：
@@ -107,9 +109,11 @@ Set-Cookie: token=123456; Max-Age=3600
 
 **使用 CSRF Token**
 
-可以利用 CSRF 攻击只是冒用用户的身份，而并没有获取到用户的 Cookie 的特点，通过在 Cookie 中设置一个 CSRF Token，然后在每次需要验证身份的请求中都将这个 CSRF Token 添加到请求中，这样即使攻击者冒用了用户的身份，但是由于没有这个 CSRF Token，服务器会拒绝这个请求。
+可以利用 CSRF 攻击只是冒用用户的身份，而并没有获取到用户的 Cookie 的特点，通过在 Cookie 中设置一个 CSRF Token，然后在每次需要验证身份的请求中都将这个 CSRF Token 添加到请求的载荷中（`body` 或者 `query` 中，显然不能放在 Cookie 中），这样即使攻击者冒用了用户的身份，但是由于没有这个 CSRF Token，服务器会拒绝这个请求。
 
-CSRF 还可能发生在其他地方，如：可以上传图片的评论区，这里发起的攻击是同源的更加危险。
+![alt text](image.png)
+
+CSRF 还可能发生在其他地方，如：可以上传图片的评论区，这里发起的攻击是同源的往往更加危险。
 
 通常需要多种不相关安全措施进行[纵深防御（Defense in depth）](<https://en.wikipedia.org/wiki/Defense_in_depth_(computing)>)。
 
@@ -121,7 +125,14 @@ CSRF 还可能发生在其他地方，如：可以上传图片的评论区，这
 
 这里就不讨论 XSS 攻击的实施方式了，重点看下我们关心的部分 **获取用户 Cookie**
 
-可以通过设置 `HttpOnly` 属性来防止 JavaScript 访问 Cookie：
+客户端的 JavaScript 可以通过 `document.cookie` 来获取到当前域名下的所有 Cookie，这样如果站点受到 XSS 攻击，攻击者就可以获取到用户的 Cookie。
+
+```JavaScript
+// 获取当前域名下的所有 Cookie
+console.log(document.cookie);
+```
+
+可以通过设置 `HttpOnly` 属性来阻止 JavaScript 访问 Cookie：
 
 ```http
 HTTP/1.1 200
@@ -134,7 +145,7 @@ Set-Cookie: token=123456; HttpOnly
 
 出于保证安全的目的，Cookie 有这比较严格的跨域限制，即使是不同的二级域名也不能共享 Cookie，比如 `api.example.com` 和 `www.example.com` 不能共享 Cookie。
 
-想要在不同的二级域名之间共享 Cookie，可以通过设置 `Domain` 属性来实现：
+想要在不同的二级域名之间共享 Cookie，可以通过设置 `Domain` 属性将 Cookie 的域名设置为顶级域名：
 
 ```http
 HTTP/1.1 200
@@ -142,6 +153,19 @@ Set-Cookie: token=123456; Domain=example.com
 ```
 
 但是这可能会引入一些安全风险，因为这样设置后，`example.com` 下的所有子域名都可以共享这个 Cookie，如果其中一个子域名存在安全漏洞，就可能导致整个域名的 Cookie 泄露。
+
+#### Cookie 总结
+
+优点：
+
+- 可以通过 `HttpOnly` 属性阻止 JavaScript 访问 Cookie，从而防止 XSS 攻击。
+- 无需前端干预，由服务端自己维护。
+- 现代浏览器对 Cookie 的安全性有了很多限制，相对安全。
+
+缺点：
+
+- Cookie 在每次请求中都会自动发送，可能会影响网络性能。
+- 需要配合其他的安全措施来防止 CSRF 攻击。
 
 ### SessionStorage 和 LocalStorage
 
@@ -173,8 +197,8 @@ Local Storage。
 
 ## References
 
-[前端安全系列（二）：如何防止 CSRF 攻击？](https://tech.meituan.com/2018/10/11/fe-security-csrf.html)
+[【美团技术团队】前端安全系列（二）：如何防止 CSRF 攻击？](https://tech.meituan.com/2018/10/11/fe-security-csrf.html)
 
-```
+[OWASP Top Ten](https://owasp.org/www-project-top-ten/)
 
-```
+[【MDN】】HTTP Cookie](https://developer.mozilla.org/zh-CN/docs/Web/HTTP/Cookies)
