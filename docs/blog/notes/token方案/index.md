@@ -171,9 +171,14 @@ Set-Cookie: token=123456; Domain=example.com
 
 #### JWT Token
 
-通过对信息进行加密，生成一个 Token，这个 Token 会包含用户的一些信息，比如用户的 ID，角色等，然后将这个 Token 发送给客户端，客户端在下次请求时会将这个 Token 发送给服务器，服务器通过解密 Token 来验证用户的身份。
+通过加密算法对信息进行加密，生成一个 Token，这个 Token 会包含用户的一些信息，比如用户的 ID、角色等，然后将这个 Token 发送给客户端，客户端在下次请求时会将这个 Token 发送给服务器，服务器通过解密 Token 来验证用户的身份。
 
 这样就可以在多个服务节点之间共享用户的登录状态，而不需要依赖中心化的 Session 管理。
+
+TODO:
+
+- Token 生成步骤
+- ...
 
 ### token 处理 将令牌存储在 Cookie 和 Local
 

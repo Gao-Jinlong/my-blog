@@ -99,14 +99,9 @@ export default () => {
                 text: "编程实践",
                 link: `${NOTES_BASE_PATH}/编程实践/index.md`,
               },
-            ],
-          },
-          {
-            text: "demo-test",
-            items: [
               {
-                text: "VideoDecoder",
-                link: `${NOTES_BASE_PATH}/VideoDecoder/index.md`,
+                text: "Token方案",
+                link: `${NOTES_BASE_PATH}/Token方案/index.md`,
               },
               {
                 text: "rolldown源码学习",
@@ -114,6 +109,10 @@ export default () => {
               },
             ],
           },
+          // {
+          //   text: "demo-test",
+          //   items: [],
+          // },
         ],
       },
 
