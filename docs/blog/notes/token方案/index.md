@@ -158,7 +158,7 @@ Set-Cookie: token=123456; Domain=example.com
 
 但是这样会引入单点故障，一旦认证服务出现问题，整个站点都将无法正常使用。
 
-![alt text](image-1.png)
+![alt text](./images/image-3.png)
 
 #### Cookie 小结
 
