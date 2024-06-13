@@ -100,12 +100,20 @@ export default () => {
                 link: `${NOTES_BASE_PATH}/编程实践/index.md`,
               },
               {
-                text: "Token方案",
-                link: `${NOTES_BASE_PATH}/Token方案/index.md`,
+                text: "token方案",
+                link: `${NOTES_BASE_PATH}/token方案/index.md`,
               },
               {
                 text: "rolldown源码学习",
                 link: `${NOTES_BASE_PATH}/rolldown源码/index.md`,
+              },
+              {
+                text: "git手册",
+                link: `${NOTES_BASE_PATH}/git手册/index.md`,
+              },
+              {
+                text: "docker手册",
+                link: `${NOTES_BASE_PATH}/docker手册/index.md`,
               },
             ],
           },
