@@ -331,3 +331,16 @@ awk '{ add += $1; subs += $2; loc += $1 - $2 } END { printf "%15s %15s %15s \n",
 -; done
 
 ```
+
+### 处理大小写冲突
+
+```bash
+# 重命名文件
+git mv <old_file> <new_file>
+# 提交
+git commit -m "rename file"
+# 修改文件名大小写
+git mv <new_file> <new_file>
+# 提交
+git commit -m "change file name"
+```
