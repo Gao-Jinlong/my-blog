@@ -78,6 +78,10 @@ export default () => {
                 text: "前端项目搭建",
                 link: `${PRACTICE_BASE_PATH}/前端项目搭建.md`,
               },
+              {
+                text: "IndexedDB",
+                link: `${PRACTICE_BASE_PATH}/IndexedDB/index.md`,
+              },
               // {
               //   text: "openlayers with OffscreenCanvas",
               //   link: `${PRACTICE_BASE_PATH}/openlayersWithOffscreenCanvas/index.md`,
