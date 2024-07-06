@@ -3,6 +3,24 @@ import { ElMessage } from "element-plus";
 
 const db: ShallowRef<IDBDatabase | null> = shallowRef(null);
 
+const headers = ref([
+  {
+    title: "姓名",
+    key: "name",
+  },
+  {
+    title: "年龄",
+    key: "age",
+  },
+  {
+    title: "邮箱",
+    key: "email",
+  },
+  {
+    title: "ssn",
+    key: "ssn",
+  },
+]);
 const data = ref([
   { ssn: "444-44-4444", name: "Bill", age: 35, email: "bill@company.com" },
   { ssn: "555-55-5555", name: "Donna", age: 32, email: "donna@home.org" },
@@ -109,4 +127,4 @@ function handleGet() {
   };
 }
 
-export { db, data, handleOpen, handleAdd, handleDelete, handleGet };
+export { db, headers, data, handleOpen, handleAdd, handleDelete, handleGet };

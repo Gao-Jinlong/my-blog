@@ -9,10 +9,10 @@
 5. 对结果进行一些操作（可以在 request 对象中找到）
 
 <script setup lang="ts">
-import {db, data, handleOpen, handleAdd, handleDelete, handleGet} from './index'
+import {db, data, headers, handleOpen, handleAdd, handleDelete, handleGet} from './index'
 </script>
 
-<ElDivider />
+<VDivider />
 
 `onupgradeneeded` 事件会在创建或更新数据库的版本触发
 
@@ -20,21 +20,24 @@ import {db, data, handleOpen, handleAdd, handleDelete, handleGet} from './index'
 
 `onupgradeneeded` 是我们唯一可以修改数据库结构的地方，在这里我们可以创建和删除对象存储，以及创建和删除索引
 
-<ElCard>
-  <template v-if="!db">
-    <p>数据库未连接</p>
-    <ElButton type="primary" @click="handleOpen">连接数据库</ElButton>
-  </template>
-  <template v-else>
+<VCard elevation='8'>
+  <VAlert   
+    border="start"
+    closable
+    :type="!db? 'warning' :'success'"
+    :variant="!db? 'outlined':'elevated'"
+    :title="!db? '未连接数据库': '已连接数据库'"
+  />
+
+  <template v-if="db">
     <h3>内存数据</h3>
-    <ElTable :data>
-      <ElTableColumn prop="ssn" label="ssn"></ElTableColumn>
-      <ElTableColumn prop="name" label="name"></ElTableColumn>
-      <ElTableColumn prop="age" label="age"></ElTableColumn>
-      <ElTableColumn prop="email" label="email"></ElTableColumn>
-    </ElTable>
+    <VDataTable :items="data" :headers>
+    </VDataTable>
   </template>
-</ElCard>
+  <VBtn v-if="!db" type="primary" @click="handleOpen">
+    连接数据库
+  </VBtn>
+</VCard>
 
 ## 添加数据
 
@@ -73,7 +76,7 @@ transaction.onerror = (event) => {
 
 如果事务中发生了错误或者调用了 `abort()` 方法，事务会被中止，如果事务成功完成，会触发 `complete` 事件
 
-<ElButton type="primary" @click="handleAdd">添加数据</ElButton>
+<VBtn @click="handleAdd">添加数据</VBtn>
 
 ## 删除数据
 
@@ -91,7 +94,7 @@ request.onsuccess = (event) => {
 };
 ```
 
-<ElButton type="danger" @click="handleDelete">删除数据</ElButton>
+<VBtn type="danger" color="error" @click="handleDelete">删除数据</VBtn>
 
 ## 获取数据
 
@@ -112,8 +115,12 @@ request.onsuccess = (event) => {
 };
 ```
 
-<ElButton type="primary" @click="handleGet">获取数据</ElButton>
+<VBtn type="primary" @click="handleGet">获取数据</VBtn>
 
 ## 更新数据
 
 现在我们查询了一些数据，修改一下并把它插回数据库
+
+<VBtn>Button</VBtn>
+<VBtnSecondary>VBtnSecondary</VBtnSecondary>
+<VBtnTertiary>VBtnTertiary</VBtnTertiary>
