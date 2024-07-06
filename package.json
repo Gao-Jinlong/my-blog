@@ -16,22 +16,22 @@
   "devDependencies": {
     "@mdi/font": "^7.4.47",
     "@types/lodash-es": "^4.17.12",
-    "sass": "^1.77.1",
-    "typescript": "^5.4.5",
+    "sass": "^1.77.6",
+    "typescript": "^5.5.3",
     "unplugin-auto-import": "^0.17.6",
     "unplugin-element-plus": "^0.8.0",
     "unplugin-vue-components": "^0.26.0",
-    "vitepress": "^1.1.4"
+    "vitepress": "^1.2.3"
   },
   "dependencies": {
-    "@vueuse/core": "^10.9.0",
+    "@vueuse/core": "^10.11.0",
     "dayjs": "^1.11.11",
-    "element-plus": "^2.7.2",
+    "element-plus": "^2.7.6",
     "lodash-es": "^4.17.21",
-    "ol": "^9.1.0",
+    "ol": "^9.2.4",
     "ol-wind": "^1.1.9",
     "vite-plugin-vuetify": "^2.0.3",
-    "vue": "^3.4.27",
+    "vue": "^3.4.31",
     "vuetify": "^3.6.11"
   }
 }

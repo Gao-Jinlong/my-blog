@@ -8,6 +8,9 @@ export default () => {
   const NOTES_BASE_PATH = "/blog/notes";
   return defineConfig({
     vite: {
+      ssr: {
+        noExternal: ["vuetify"],
+      },
       plugins: [
         AutoImport({
           imports: ["vue"],

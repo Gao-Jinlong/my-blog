@@ -16,7 +16,7 @@ defineProps<{
   name?: string;
   text?: string;
   tagline?: string;
-  image?: DefaultTheme.ThemeableImage;
+  image?: Omit<DefaultTheme.ThemeableImage, "string">;
   actions?: HeroAction[];
 }>();
 
@@ -83,7 +83,14 @@ const { text, blink } = useTypewriter({
         <div class="image-container">
           <div class="image-bg" />
           <slot name="home-hero-image">
-            <VPImage v-if="image" class="image-src" :image="image" />
+            <VImg
+              v-if="image"
+              class="image-src"
+              :width="400"
+              cover
+              :draggable="false"
+              v-bind="image"
+            />
           </slot>
         </div>
       </div>

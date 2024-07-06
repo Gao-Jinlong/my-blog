@@ -121,6 +121,4 @@ request.onsuccess = (event) => {
 
 现在我们查询了一些数据，修改一下并把它插回数据库
 
-<VBtn>Button</VBtn>
-<VBtnSecondary>VBtnSecondary</VBtnSecondary>
-<VBtnTertiary>VBtnTertiary</VBtnTertiary>
+TODO:...
