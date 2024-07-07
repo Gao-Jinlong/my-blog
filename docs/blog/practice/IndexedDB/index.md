@@ -9,9 +9,10 @@
 5. 对结果进行一些操作（可以在 request 对象中找到）
 
 <script setup lang="ts">
-import {db, data, headers, handleOpen, handleAdd, handleDelete, handleGet} from './index'
+import { db, data, headers, handleOpen, handleAdd, handleDelete, handleGet, handleUpdate} from './index'
 </script>
 
+<VMessage />
 <VDivider />
 
 `onupgradeneeded` 事件会在创建或更新数据库的版本触发
@@ -121,4 +122,28 @@ request.onsuccess = (event) => {
 
 现在我们查询了一些数据，修改一下并把它插回数据库
 
-TODO:...
+```js
+const objectStore = db
+  .transaction(["customers", "readwrite"])
+  .objectStore("customers");
+const request = objectStore.get("444-44-4444");
+
+request.onsuccess = (event) => {
+  const data = event.target.result;
+
+  data.age = 42;
+
+  const requestUpdate = objectStore.put(data);
+
+  requestUpdate.onerror = (event) => {
+    console.log("更新失败", event);
+    ElMessage.error("更新失败");
+  };
+  requestUpdate.onsuccess = (event) => {
+    console.log("更新成功", event);
+    ElMessage.success("更新成功");
+  };
+};
+```
+
+<VBtn type="warning" @click="handleUpdate">更新数据</VBtn>

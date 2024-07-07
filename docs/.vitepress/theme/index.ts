@@ -12,6 +12,9 @@ import * as directives from "vuetify/directives";
 import { aliases, mdi } from "vuetify/iconsets/mdi";
 
 import "@mdi/font/css/materialdesignicons.css";
+import useMessage from "../components/v-message/useMessage";
+import VMessage from "../components/v-message/VMessage.vue";
+
 export default {
   extends: DefaultTheme,
   Layout: MyLayout,
@@ -19,6 +22,9 @@ export default {
     const $t = (path) => {
       return get(i18nConfig.messages!.en, path, "");
     };
+
+    const message = useMessage();
+    console.log("🚀 ~ enhanceApp ~ message:", message);
 
     const myCustomLightTheme = {
       dark: false,
@@ -94,7 +100,9 @@ export default {
       directives,
     });
 
+    app.component("VMessage", VMessage);
     app.provide("$t", $t);
+    app.provide("$message", message);
     app.use(ElementPlus).use(vuetify);
   },
 };

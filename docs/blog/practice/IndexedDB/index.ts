@@ -1,5 +1,7 @@
 import type { ShallowRef } from "vue";
-import { ElMessage } from "element-plus";
+import useMessage from "../../../.vitepress/components/v-message/useMessage";
+
+const $message = useMessage();
 
 const db: ShallowRef<IDBDatabase | null> = shallowRef(null);
 
@@ -32,7 +34,7 @@ function handleOpen() {
   // 连接错误处理
   request.onerror = (event) => {
     console.log("Error!", event);
-    ElMessage.error("数据库连接失败");
+    $message.error("数据库连接失败");
   };
 
   request.onupgradeneeded = (event: any) => {
@@ -69,7 +71,7 @@ function handleSuccess(event: any) {
 
 function handleAdd() {
   if (!db.value) {
-    ElMessage.error("数据库未连接");
+    $message.error("数据库未连接");
     return;
   }
 
@@ -82,17 +84,19 @@ function handleAdd() {
   });
   transaction.oncomplete = (event) => {
     console.log("All done!");
-    ElMessage.success("添加成功");
+
+    $message.success("添加成功");
   };
   transaction.onerror = (event) => {
     console.log("Error!", event);
-    ElMessage.error("添加失败");
+
+    $message.error("添加失败");
   };
 }
 
 function handleDelete() {
   if (!db.value) {
-    ElMessage.error("数据库未连接");
+    $message.error("数据库未连接");
     return;
   }
 
@@ -103,13 +107,15 @@ function handleDelete() {
 
   request.onsuccess = (event) => {
     console.log("删除成功", event);
-    ElMessage.success("删除成功");
+
+    $message.success("删除成功");
   };
 }
 
 function handleGet() {
   if (!db.value) {
-    ElMessage.error("数据库未连接");
+    $message.error("数据库未连接");
+
     return;
   }
 
@@ -118,13 +124,51 @@ function handleGet() {
   const request = objectStore.get("444-44-4444");
 
   request.onerror = (event) => {
-    ElMessage.error("获取数据失败");
+    $message.error("获取数据失败");
+
     console.log("获取数据失败", event);
   };
   request.onsuccess = (event) => {
     console.log("获取数据成功", request.result);
-    ElMessage.success("获取数据成功，查询名称是：" + request.result.name);
+    if (!request.result) {
+      $message.warning("数据不存在");
+      return;
+    } else {
+      $message.success("获取数据成功" + request.result?.name);
+    }
   };
 }
 
-export { db, headers, data, handleOpen, handleAdd, handleDelete, handleGet };
+function handleUpdate() {
+  if (!db.value) {
+    return;
+  }
+  const objectStore = db.value
+    ?.transaction(["customers"], "readwrite")
+    .objectStore("customers");
+  const request = objectStore.get("444-44-4444");
+
+  request.onerror = (event) => {};
+  request.onsuccess = (event) => {
+    request.result.age = 20;
+
+    const requestUpdate = objectStore.put(request.result);
+    requestUpdate.onerror = (event) => {
+      $message.error("更新数据失败");
+    };
+    requestUpdate.onsuccess = (event) => {
+      $message.success("更新数据成功");
+    };
+  };
+}
+
+export {
+  db,
+  headers,
+  data,
+  handleOpen,
+  handleAdd,
+  handleDelete,
+  handleGet,
+  handleUpdate,
+};
