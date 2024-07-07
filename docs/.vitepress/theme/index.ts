@@ -24,7 +24,6 @@ export default {
     };
 
     const message = useMessage();
-    console.log("🚀 ~ enhanceApp ~ message:", message);
 
     const myCustomLightTheme = {
       dark: false,
