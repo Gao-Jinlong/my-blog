@@ -162,13 +162,112 @@ function handleUpdate() {
   };
 }
 
+function handleCursor() {
+  if (!db.value) {
+    $message.error("数据库未连接");
+    return;
+  }
+  const objectStore = db.value
+    ?.transaction(["customers"], "readwrite")
+    .objectStore("customers");
+  const request = objectStore.openCursor();
+  request.onerror = (event) => {
+    $message.error("获取数据失败");
+  };
+  request.onsuccess = (event) => {
+    const cursor = event.target?.result;
+    if (cursor) {
+      console.log(`SSN ${cursor.key} 对应的名字是 ${cursor.value.name}`);
+      cursor.continue();
+    } else {
+      $message.success("遍历完成");
+    }
+  };
+}
+
+const allData = ref([]);
+function handleGetAll() {
+  if (!db.value) {
+    $message.error("数据库未连接");
+    return;
+  }
+  const objectStore = db.value
+    ?.transaction(["customers"], "readwrite")
+    .objectStore("customers");
+  const request = objectStore.getAll();
+  request.onerror = (event) => {
+    $message.error("获取数据失败");
+  };
+  request.onsuccess = (event) => {
+    console.log("获取数据成功", request.result);
+    allData.value = request.result;
+  };
+}
+
+function handleIndex() {
+  if (!db.value) {
+    $message.error("数据库未连接");
+    return;
+  }
+  const objectStore = db.value
+    ?.transaction(["customers"], "readwrite")
+    .objectStore("customers");
+
+  const index = objectStore.index("name");
+  index.get("Donna").onsuccess = (event) => {
+    console.log(`Donna 的 SSN 是 ${event.target.result.ssn}`);
+    $message.success(`Donna 的 SSN 是 ${event.target.result.ssn}`);
+  };
+}
+
+function handleKeyCursor() {
+  if (!db.value) {
+    $message.error("数据库未连接");
+    return;
+  }
+  const objectStore = db.value
+    ?.transaction(["customers"], "readwrite")
+    .objectStore("customers");
+
+  const index = objectStore.index("name");
+
+  index.openCursor().onsuccess = (event) => {
+    const cursor = event.target.result;
+    if (cursor) {
+      // cursor.key 是名字，如“Bill”，而 cursor.value 是整个对象。
+      console.log(
+        `名字：${cursor.key}，SSN：${cursor.value.ssn}，电子邮件：${cursor.value.email}`
+      );
+      cursor.continue();
+    }
+  };
+
+  index.openKeyCursor().onsuccess = (event) => {
+    const cursor = event.target?.result;
+    if (cursor) {
+      console.log(`Name: ${cursor.key}, SSN: ${cursor.primaryKey}`);
+      cursor.continue();
+    } else {
+      $message.success("遍历完成");
+    }
+  };
+  index.onerror = (event) => {
+    $message.error("获取数据失败");
+  };
+}
+
 export {
   db,
   headers,
   data,
+  allData,
   handleOpen,
   handleAdd,
   handleDelete,
   handleGet,
   handleUpdate,
+  handleCursor,
+  handleGetAll,
+  handleIndex,
+  handleKeyCursor,
 };

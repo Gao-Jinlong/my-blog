@@ -9,7 +9,7 @@
 5. 对结果进行一些操作（可以在 request 对象中找到）
 
 <script setup lang="ts">
-import { db, data, headers, handleOpen, handleAdd, handleDelete, handleGet, handleUpdate} from './index'
+import { db, data,allData, headers, handleOpen, handleAdd, handleDelete, handleGet, handleUpdate, handleCursor ,handleGetAll, handleIndex, handleKeyCursor} from './index'
 </script>
 
 <VMessage />
@@ -147,3 +147,91 @@ request.onsuccess = (event) => {
 ```
 
 <VBtn type="warning" @click="handleUpdate">更新数据</VBtn>
+
+## 使用游标
+
+可以使用 `openCursor()` 方法来遍历对象存储中的所有数据
+
+```js
+const objectStore = db.transaction("customers").objectStore("customers");
+
+objectStore.openCursor().onsuccess = (event) => {
+  const cursor = event.target.result;
+  if (cursor) {
+    console.log(`SSN ${cursor.key} 对应的名字是 ${cursor.value.name}`);
+    cursor.continue();
+  } else {
+    console.log("没有更多数据了");
+  }
+};
+```
+
+<VBtn type="primary" @click="handleCursor">使用游标</VBtn>
+
+使用游标时对象是延迟创建的，因此查询游标的 `value` 属性是会带来性能消耗的，如果只是想检索键这会高效很多
+
+如果想要获取一个由对象存储中的所有对象组成的数组，则可以使用 `getAll()` 方法
+
+```js
+objectStore.getAll().onsuccess = (event) => {
+  console.log(event.target.result);
+};
+```
+
+<VBtn type="primary" @click="handleGetAll">获取所有数据</VBtn>
+
+<VCard>
+    <VDataTable :items="allData" :headers>
+    </VDataTable>
+</VCard>
+
+## 使用索引
+
+当想要通过非主键的字段来查找数据时，将会需要在数据库中迭代所有的数据直到找到正确的那个，以这种方式查找将会非常的慢，此时可以使用索引来进行查找。
+
+```js
+// 首先需要确定已经在对象存储中创建了索引
+// objectStore.createIndex("name", "name");
+// 否则会得到 DOMException
+
+const index = objectStore.index("name");
+
+index.get("Donna").onsuccess = (event) => {
+  console.log(`Donna 的 SSN 是 ${event.target.result.ssn}`);
+};
+```
+
+<VBtn type="primary" @click="handleIndex">使用索引</VBtn>
+
+"name" 属性不是唯一的，因此可能存在不止一条记录符合条件，此时总是会得到键值最小的那个
+
+如果需要访问带有给定 name 的所有的记录，可以使用游标。你可以在索引上打开两种不同类型的游标：常规游标可以映射索引属性到对象存储空间中的对象，键游标可以映射索引属性到用来存储对象存储空间中的对象的键。差异如下所示
+
+```js
+const index = objectStore.index("name");
+
+// 使用常规游标来获取所有客户记录的对象
+index.openCursor().onsuccess = (event) => {
+  const cursor = event.target.result;
+  if (cursor) {
+    // cursor.key 是名字，如“Bill”，而 cursor.value 是整个对象。
+    console.log(
+      `名字：${cursor.key}，SSN：${cursor.value.ssn}，电子邮件：${cursor.value.email}`
+    );
+    cursor.continue();
+  }
+};
+
+// 使用键游标来获取客户记录的对象的键
+index.openKeyCursor().onsuccess = (event) => {
+  const cursor = event.target.result;
+  if (cursor) {
+    // cursor.key 是名字，如“Bill”，而 cursor.value 是 SSN。
+    // 无法直接获取存储对象的其余部分。
+    console.log(`Name: ${cursor.key}, SSN: ${cursor.primaryKey}`);
+    cursor.continue();
+  }
+};
+```
+
+<VBtn type="primary" @click="handleKeyCursor">键游标</VBtn>
