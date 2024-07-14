@@ -9,7 +9,8 @@
 5. 对结果进行一些操作（可以在 request 对象中找到）
 
 <script setup lang="ts">
-import { db, data,allData, headers, handleOpen, handleAdd, handleDelete, handleGet, handleUpdate, handleCursor ,handleGetAll, handleIndex, handleKeyCursor} from './index'
+import { db, data,allData, headers, handleOpen, handleAdd, handleDelete, handleGet, handleUpdate, handleCursor ,handleGetAll, handleIndex, handleKeyCursor, handleRangeCursor, openNewVersion} from './index'
+
 </script>
 
 <VMessage />
@@ -235,3 +236,85 @@ index.openKeyCursor().onsuccess = (event) => {
 ```
 
 <VBtn type="primary" @click="handleKeyCursor">键游标</VBtn>
+
+指定游标的范围和方向
+
+```js
+// 仅匹配“Donna”
+const singleKeyRange = IDBKeyRange.only("Donna");
+
+// 匹配所有大于“Bill”的，包括“Bill”
+const lowerBoundKeyRange = IDBKeyRange.lowerBound("Bill");
+
+// 匹配所有大于“Bill”的，但不包括“Bill”
+const lowerBoundOpenKeyRange = IDBKeyRange.lowerBound("Bill", true);
+
+// 匹配所有小于“Donna”的，不包括“Donna”
+const upperBoundOpenKeyRange = IDBKeyRange.upperBound("Donna", true);
+
+// 匹配所有在“Bill”和“Donna”之间的，但不包括“Donna”
+const boundKeyRange = IDBKeyRange.bound("Bill", "Donna", false, true);
+
+// 使用其中的一个键范围，把它作为 openCursor()/openKeyCursor() 的第一个参数
+index.openCursor(boundKeyRange).onsuccess = (event) => {
+  const cursor = event.target.result;
+  if (cursor) {
+    // 对匹配结果进行一些操作。
+    cursor.continue();
+  }
+};
+```
+
+<VBtn type="primary" @click="handleRangeCursor()" >范围游标</VBtn>
+
+```js
+// 使用降序查询
+index.openCursor(boundKeyRange, "prev").onsuccess = (event) => {
+  const cursor = event.target.result;
+  if (cursor) {
+    // 对匹配结果进行一些操作。
+    cursor.continue();
+  }
+};
+```
+
+<VBtn type="primary" @click="handleRangeCursor('prev')" >范围游标</VBtn>
+
+当使用更高版本号调用 `open()` 方法时，其他所有打开的数据库必须显式地确认请求，你才能对数据库进行修改（`onblocked` 事件会被触发，直到他们被关闭或重新加载）
+
+```js
+const openReq = indexedDB.open("MyTestDatabase", 3);
+
+openReq.onblocked = (event) => {
+  // 如果其他页面加载了该数据库，在我们继续之前需要关闭它们。
+  console.log("请关闭其它打开了该站点标签页！");
+};
+
+openReq.onupgradeneeded = (event) => {
+  // 其他数据库已被关闭
+
+  console.log("onupgradeneeded");
+
+  useDatabase(db)
+};
+
+openReq.success => (event) =>{
+  const db = event.target.result;
+  useDatabase(db);
+  return
+}
+
+function useDatabase(db){
+  // 确保添加了在其他标签页请求了版本变更时会被通知的事件处理器
+  // 必须关闭数据库，这样其他标签页才能更新数据库
+  // 如果不这样做，在用户关闭这些标签页之前，版本升级将不会发生
+  db.onversionchange = (event) => {
+    db.close();
+    console.log('此页面的新版本已准备就绪。请重新加载或关闭此标签页！')
+  }
+}
+```
+
+从页面顶部按钮链接数据库后，再次打开一个新的标签点击此按钮
+
+<VBtn type="primary" @click="openNewVersion">打开新版本数据库</VBtn>
